@@ -34,9 +34,7 @@ jobs:
                 mkdir targets makecode
                 cd makecode
                 git clone https://github.com/microsoft/pxt
-#                git clone https://github.com/microsoft/pxt-common-packages
                 git clone https://github.com/microsoft/pxt-microbit
-#                git clone https://github.com/microsoft/pxt-maker
                 
             - name: Compress
               run: tar -czvf ./targets/microbit.tar.gz makecode
@@ -45,9 +43,7 @@ jobs:
               run: |
                 cd makecode
                 cd pxt && npm install && cd ..
-#                cd pxt-common-packages && npm install && cd ..
-                cd pxt-microbit && npm install && cd ..
-#                cd pxt-maker && npm install
+                cd pxt-microbit && npm install
 
             - name: Compiler Compress
               run: tar -czvf ./targets/microbit-compiler.tar.gz makecode
