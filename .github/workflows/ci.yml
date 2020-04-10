@@ -24,7 +24,7 @@ jobs:
             - name: Get dependencies
               run: |
                 sudo -E apt-get update
-                sudo -E apt-get -y install build-essential autoconf automake libtool git wget curl
+                sudo -E apt-get -y install build-essential autoconf automake libtool git wget curl xz-utils
                 sudo -E apt-get -y autoremove --purge
                 sudo -E apt-get clean
                 df -h
