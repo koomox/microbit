@@ -1,0 +1,53 @@
+name: microbit-CI
+
+on:
+  push:
+    branches: 
+      - master
+      
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@master
+              with:
+                ref: master
+                
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                node-version: '10.x'
+
+            - name: Get dependencies
+              run: |
+                sudo -E apt-get update
+                sudo -E apt-get -y install build-essential autoconf automake libtool git wget curl
+                sudo -E apt-get -y autoremove --purge
+                sudo -E apt-get clean
+                df -h
+
+            - name: Deploy
+              run: |
+                mkdir targets
+                git clone https://github.com/microsoft/pxt
+                git clone https://github.com/microsoft/pxt-common-packages
+                git clone https://github.com/microsoft/pxt-microbit
+                git clone https://github.com/microsoft/pxt-maker
+
+                tar -czvf ./targets/microbit.tar.gz pxt pxt-common-packages pxt-microbit pxt-maker
+
+                cd pxt && npm install && cd ..
+                cd pxt-common-packages && npm install && cd ..
+                cd pxt-microbit && npm install && cd ..
+                cd pxt-maker && npm install && cd ..
+
+                tar -czvf ./targets/microbit-compiler.tar.gz pxt pxt-common-packages pxt-microbit pxt-maker
+                
+            - name: Upload
+              uses: actions/upload-artifact@master
+              with:
+                name: nginx
+                path: ./targets/
