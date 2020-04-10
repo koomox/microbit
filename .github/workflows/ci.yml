@@ -31,23 +31,25 @@ jobs:
 
             - name: Deploy
               run: |
-                mkdir targets
+                mkdir targets makecode
+                cd makecode
                 git clone https://github.com/microsoft/pxt
                 git clone https://github.com/microsoft/pxt-common-packages
                 git clone https://github.com/microsoft/pxt-microbit
                 git clone https://github.com/microsoft/pxt-maker
+                cd ..
+                tar -czvf ./targets/microbit.tar.gz makecode
 
-                tar -czvf ./targets/microbit.tar.gz pxt pxt-common-packages pxt-microbit pxt-maker
-
+                cd makecode
                 cd pxt && npm install && cd ..
                 cd pxt-common-packages && npm install && cd ..
                 cd pxt-microbit && npm install && cd ..
                 cd pxt-maker && npm install && cd ..
-
-                tar -czvf ./targets/microbit-compiler.tar.gz pxt pxt-common-packages pxt-microbit pxt-maker
+                cd ..
+                tar -czvf ./targets/microbit-compiler.tar.gz makecode
                 
             - name: Upload
               uses: actions/upload-artifact@master
               with:
-                name: nginx
+                name: microbit
                 path: ./targets/
