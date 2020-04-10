@@ -37,7 +37,10 @@ jobs:
                 git clone https://github.com/microsoft/pxt-microbit
                 
             - name: Compress
-              run: tar -czvf ./targets/microbit.tar.gz makecode
+              run: |
+                cd ./targets
+                tar -cvf microbit.tar makecode
+                xz microbit.tar
                 
             - name: Compiler
               run: |
@@ -46,7 +49,10 @@ jobs:
                 cd pxt-microbit && npm install
 
             - name: Compiler Compress
-              run: tar -czvf ./targets/microbit-compiler.tar.gz makecode
+              run: |
+                cd ./targets
+                tar -cvf microbit-compiler.tar makecode
+                xz microbit-compiler.tar
                 
             - name: Upload
               uses: actions/upload-artifact@master
