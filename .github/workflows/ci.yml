@@ -39,7 +39,7 @@ jobs:
             - name: Compress
               run: |
                 cd ./targets
-                tar -cvf microbit.tar makecode
+                tar -cvf microbit.tar ../makecode
                 xz microbit.tar
                 
             - name: Compiler
@@ -51,7 +51,7 @@ jobs:
             - name: Compiler Compress
               run: |
                 cd ./targets
-                tar -cvf microbit-compiler.tar makecode
+                tar -cvf microbit-compiler.tar ../makecode
                 xz microbit-compiler.tar
                 
             - name: Upload
