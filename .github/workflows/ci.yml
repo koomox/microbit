@@ -34,28 +34,24 @@ jobs:
                 mkdir targets makecode
                 cd makecode
                 git clone https://github.com/microsoft/pxt
+                git clone https://github.com/microsoft/pxt-common-packages
                 git clone https://github.com/microsoft/pxt-microbit
                 
+            - name: Compiler
+              run: |
+                cd makecode
+                cd pxt && npm install && cd ..
+                cd pxt-common-packages && npm install && cd ..
+                cd pxt-microbit && npm install
+
             - name: Compress
               run: |
                 cd ./targets
                 tar -cvf microbit.tar ../makecode
                 xz microbit.tar
                 
-            - name: Compiler
-              run: |
-                cd makecode
-                cd pxt && npm install && cd ..
-                cd pxt-microbit && npm install
-
-            - name: Compiler Compress
-              run: |
-                cd ./targets
-                tar -cvf microbit-compiler.tar ../makecode
-                xz microbit-compiler.tar
-                
             - name: Upload
               uses: actions/upload-artifact@master
               with:
                 name: microbit
-                path: ./targets/
+                path: ./targets/microbit.tar.xz
