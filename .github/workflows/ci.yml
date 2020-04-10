@@ -37,8 +37,6 @@ jobs:
                 git clone https://github.com/microsoft/pxt-common-packages
                 git clone https://github.com/microsoft/pxt-microbit
                 git clone https://github.com/microsoft/pxt-maker
-                cd ..
-                tar -czvf ./targets/microbit.tar.gz makecode
                 
             - name: Compress
               run: tar -czvf ./targets/microbit.tar.gz makecode
@@ -49,9 +47,10 @@ jobs:
                 cd pxt && npm install && cd ..
                 cd pxt-common-packages && npm install && cd ..
                 cd pxt-microbit && npm install && cd ..
-                cd pxt-maker && npm install && cd ..
-                cd ..
-                tar -czvf ./targets/microbit-compiler.tar.gz makecode
+                cd pxt-maker && npm install
+
+            - name: Compiler Compress
+              run: tar -czvf ./targets/microbit-compiler.tar.gz makecode
                 
             - name: Upload
               uses: actions/upload-artifact@master
