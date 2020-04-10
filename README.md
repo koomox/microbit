@@ -21,6 +21,12 @@ npm install -g pxt
 npm install
 ```
 ```sh
+cd pxt && npm install && cd ..
+cd pxt-common-packages && npm install && cd ..
+cd pxt-microbit && npm install && cd ..
+cd pxt-maker && npm install && cd ..
+```
+```sh
 pxt serve
 pxt serve --local
 ```
